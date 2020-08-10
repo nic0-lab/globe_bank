@@ -1,25 +1,15 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8"/>
-    <title>GBI - Global Bank International</title>
-    <link href="../stylesheets/admin.css" rel="stylesheet" media="all" />
-  </head>
-  <body>
+<?php require_once('../../private/initialize.php'); ?>
 
-    <header>
-      <h1>GBI Admin Area</h1>
-    </header>
+<?php $page_title = 'Admin Menu'; ?>
+<?php include(SHARED_PATH . '/admin_header.php')?>
 
-    <navigation>
-      <ul>
-        <li><a href="index.php">Menu</a></li>
-      </ul>
-    </navigation>
+<div id="content">
+  <div id="main-menu">
+    <h2>Main Menu</h2>
+    <ul>
+      <li><a href="subjects/index.php">Subjects</a></li>
+    </ul>
+  </div>
+</div>
 
-    <div id="content"></div>
-
-    <footer>&copy; <?= date('Y'); ?> Globe Bank</footer>
-    
-  </body>
-</html>
+<?php include(SHARED_PATH . '/admin_footer.php')?>

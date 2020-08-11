@@ -6,7 +6,7 @@ if (!isset($page_title)) { $page_title = 'Admin Area'; }
 <html lang="en">
   <head>
     <meta charset="UTF-8"/>
-    <title>GBI - <?= $page_title; ?></title>
+    <title>GBI - <?= h($page_title); ?></title>
     <!-- <link href="<?= WWW_ROOT ?>../stylesheets/admin.css" rel="stylesheet" media="all" /> -->
     <link href="<?= WWW_ROOT ?>stylesheets/admin.css" rel="stylesheet" media="all" />
   </head>

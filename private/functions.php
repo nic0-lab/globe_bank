@@ -1,6 +1,6 @@
 <?php
 
-function url_for($script_path)
+function urlFor($script_path)
 {
 
     // add the leading '/' if not present
@@ -24,6 +24,23 @@ function raw_u($string="")
 function h($string="")
 {
     return htmlspecialchars($string);
+}
+
+function error404()
+{
+    header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+    exit();
+}
+
+function error500()
+{
+    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error');
+    exit();
+}
+
+function redirectTo($location) {
+    header('Location: ' . $location);
+    exit;
 }
 
 ?>

@@ -7,7 +7,8 @@
   <div id="main-menu">
     <h2>Main Menu</h2>
     <ul>
-      <li><a href="subjects/index.php">Subjects</a></li>
+      <li><a href="<?= '/admin/subjects/index.php' ?>">Subjects</a></li>
+      <li><a href="<?= '/admin/pages/index.php' ?>">Pages</a></li>
     </ul>
   </div>
 </div>

@@ -29,7 +29,7 @@ if ($test == '404') {
     
     <h1>Create Subject</h1>
     
-    <form action="" method="post">
+    <form action="/admin/subjects/create.php" method="post">
       <dl>
         <dt>Menu Name</dt>
         <dd><input name="menu_name" type="text" value=""/></dd>

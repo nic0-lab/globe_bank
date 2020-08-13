@@ -1,19 +1,31 @@
+<?php require_once('../../../private/initialize.php'); ?>
+
 <?php
 
-require_once('../../../private/initialize.php');
-
-$test = $_GET['test'] ?? '';
-
-if ($test == '404') {
-    error404();
-} elseif ($test == '500') {
-    error500();
-} elseif ($test == 'redirect') {
+if (!isset($_GET['id'])) {
     redirectTo('/admin/subjects/index.php');
-} else {
-    echo 'No Error';
 }
+$id = $_GET['id'];
+$menu_name = '';
+$position = '';
+$visible = '';
 
+// check if this is a POST request
+// if not, redirect to the form (new.php)
+if (is_post_request()) {
+    
+    // Handle form values sent by new.php
+
+    $menu_name = $_POST['menu_name'] ?? '';
+    $position = $_POST['position'] ?? '';
+    $visible = $_POST['visible'] ?? '';
+
+    echo 'Form parameters<br>';
+    echo 'Menu name: ' . $menu_name . '<br>';
+    echo 'Position: ' . $position . '<br>';
+    echo 'Visible: ' . $visible . '<br>';
+    
+}
 
 ?>
 
@@ -22,17 +34,17 @@ if ($test == '404') {
 
 <div id="content">
   
-  <a class="back-link" href="<?= '/admin/subjects/index.php' ?>">&laquo; Back to List</a>
+  <a class="back-link" href="/admin/subjects/index.php">&laquo; Back to List</a>
   <br/><br/>
 
   <div class="subject edit">
     
     <h1>Edit Subject</h1>
     
-    <form action="" method="post">
+    <form action="/admin/subjects/edit.php?id=<?= h(u($id)) ?>" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input name="menu_name" type="text" value=""/></dd>
+        <dd><input name="menu_name" type="text" value="<?= $menu_name ?>"/></dd>
       </dl>
       <dl>
         <dt>Position</dt>

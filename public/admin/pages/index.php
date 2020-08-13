@@ -41,7 +41,7 @@ include(SHARED_PATH . '/admin_header.php');
           <td><?php echo $page['visible'] == 1 ? 'true' : 'false'; ?></td>
     	    <td><?php echo h($page['menu_name']); ?></td>
           <td><a class="action" href="/admin/pages/show.php?id=<?= h(u($page['id'])); ?>">View</a></td>
-          <td><a class="action" href="">Edit</a></td>
+          <td><a class="action" href="/admin/pages/edit.php?id=<?= h(u($page['id'])); ?>">Edit</a></td>
           <td><a class="action" href="">Delete</a></td>
     	  </tr>
       <?php } ?>

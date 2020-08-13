@@ -12,27 +12,13 @@ if (is_post_request()) {
     $position = $_POST['position'] ?? '';
     $visible = $_POST['visible'] ?? '';
 
-    echo 'Form parameters<br>';
-    echo 'Menu name: ' . $menu_name . '<br>';
-    echo 'Position: ' . $position . '<br>';
-    echo 'Visible: ' . $visible . '<br>';
+    $result = insertSubject($menu_name, $position, $visible);
+    $new_id = mysqli_insert_id($db);
+    redirectTo('/admin/subjects/show.php?id=' . $new_id);
     
 } else {
     redirectTo('/admin/subjects/new.php');
 }
-
-$msg="";
-$pattern="/SESA[0-9]{5}/";
-$str="SESA12345468";
-if (preg_match($pattern,$str))
-{
-    $msg="OK";
-}
-else
-{
-    $msg="NOK";
-}
-echo "msg=".$msg;
 
 
 ?>

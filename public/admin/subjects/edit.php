@@ -45,7 +45,7 @@ if (is_post_request()) {
     
     <h1>Edit Subject</h1>
     
-    <form action="/admin/subjects/edit.php?id=<?= h(u($id)) ?>" method="post">
+    <form action="/admin/subjects/edit.php?id=<?= h(u($subject['id'])) ?>" method="post">
       <dl>
         <dt>Menu Name</dt>
         <dd><input name="menu_name" type="text" value="<?= h($subject['menu_name']) ?>"/></dd>

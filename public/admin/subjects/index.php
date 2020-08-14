@@ -30,13 +30,13 @@ $subject_set = find_all_subjects();
 
       <?php while ($subject = mysqli_fetch_assoc($subject_set)) { ?>
         <tr>
-          <td><?php echo h($subject['id']); ?></td>
-          <td><?php echo h($subject['position']); ?></td>
-          <td><?php echo $subject['visible'] == 1 ? 'true' : 'false'; ?></td>
-    	    <td><?php echo h($subject['menu_name']); ?></td>
-          <td><a class="action" href="/admin/subjects/show.php?id=<?= h(u($subject['id'])); ?>">View</a></td>
-          <td><a class="action" href="/admin/subjects/edit.php?id=<?= h(u($subject['id'])); ?>">Edit</a></td>
-          <td><a class="action" href="">Delete</a></td>
+          <td><?= h($subject['id']) ?></td>
+          <td><?= h($subject['position']) ?></td>
+          <td><?= $subject['visible'] == 1 ? 'true' : 'false' ?></td>
+    	    <td><?= h($subject['menu_name']) ?></td>
+          <td><a class="action" href="/admin/subjects/show.php?id=<?= h(u($subject['id'])) ?>">View</a></td>
+          <td><a class="action" href="/admin/subjects/edit.php?id=<?= h(u($subject['id'])) ?>">Edit</a></td>
+          <td><a class="action" href="/admin/subjects/delete.php?id=<?= h(u($subject['id'])) ?>">Delete</a></td>
     	  </tr>
       <?php } ?>
   	</table>

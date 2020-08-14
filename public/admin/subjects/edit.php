@@ -6,25 +6,23 @@ if (!isset($_GET['id'])) {
     redirectTo('/admin/subjects/index.php');
 }
 $id = $_GET['id'];
-$menu_name = '';
-$position = '';
-$visible = '';
 
 // check if this is a POST request
 // if not, redirect to the form (new.php)
 if (is_post_request()) {
     
-    // Handle form values sent by new.php
+    // Handle form values
+    $subject = [];
+    $subject['id'] = $id;
+    $subject['menu_name'] = $_POST['menu_name'] ?? '';
+    $subject['position'] = $_POST['position'] ?? '';
+    $subject['visible'] = $_POST['visible'] ?? '';
 
-    $menu_name = $_POST['menu_name'] ?? '';
-    $position = $_POST['position'] ?? '';
-    $visible = $_POST['visible'] ?? '';
-
-    echo 'Form parameters<br>';
-    echo 'Menu name: ' . $menu_name . '<br>';
-    echo 'Position: ' . $position . '<br>';
-    echo 'Visible: ' . $visible . '<br>';
+    $result = updateSubject($subject);
+    redirectTo('/admin/subjects/show.php?id=' . $subject['id']);
     
+} else {
+    $subject = find_subject_by_id($id);
 }
 
 ?>
@@ -44,13 +42,18 @@ if (is_post_request()) {
     <form action="/admin/subjects/edit.php?id=<?= h(u($id)) ?>" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input name="menu_name" type="text" value="<?= $menu_name ?>"/></dd>
+        <dd><input name="menu_name" type="text" value="<?= h($subject['menu_name']) ?>"/></dd>
       </dl>
       <dl>
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1">1</option>
+            <option value="1"
+                    <?php
+                    if($subject['position'] == '1') {
+                        echo 'selected';
+                    } ?>
+            >1</option>
           </select>
         </dd>
       </dl>
@@ -58,7 +61,13 @@ if (is_post_request()) {
         <dt>Visible</dt>
         <dd>
           <input name="visible" type="hidden" value="0" />
-          <input name="visible" type="checkbox" value="1" />
+          <input name="visible" type="checkbox" value="1"
+                 <?php
+                 if ($subject['visible'] == 1) {
+                     echo 'checked';                     
+                 }
+                 ?>
+          />
         </dd>
       </dl>
       <div id="operations">

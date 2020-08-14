@@ -46,15 +46,17 @@ function find_subject_by_id($id)
  *
  * Return: true or exit
  */
-function insertSubject($menu_name, $position, $visible)
+function insertSubject($subject)
 {
+
+    global $db;
 
     $sql = "INSERT INTO subjects ";
     $sql .= "(menu_name, position, visible) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $menu_name . "',";
-    $sql .= "'" . $position . "',";
-    $sql .= "'" . $visible . "'";
+    $sql .= "'" . $subject['menu_name'] . "',";
+    $sql .= "'" . $subject['position'] . "',";
+    $sql .= "'" . $subject['visible'] . "'";
     $sql .= ")";
     $result = mysqli_query($db, $sql);
 
@@ -68,6 +70,32 @@ function insertSubject($menu_name, $position, $visible)
         exit;
     }
 
+}
+
+function updateSubject($subject) {
+
+    global $db;
+
+    $sql = "UPDATE subjects SET ";
+    $sql .= "menu_name='" . $subject['menu_name'] . "', ";
+    $sql .= "position='" . $subject['position'] . "', ";
+    $sql .= "visible='" . $subject['visible'] . "' ";
+    $sql .= "WHERE id='" . $subject['id'] . "' ";
+    $sql .= "LIMIT 1";
+
+    echo $sql;
+
+    $result = mysqli_query($db, $sql);
+    // For UPDATE statements, $result is true/false
+    if ($result) {
+        // redirectTo('/admin/subjects/show.php?id=' . $subject['id']);
+        return true;
+    } else {
+        // UPDATE failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }    
 }
 
 // pages

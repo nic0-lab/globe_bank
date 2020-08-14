@@ -4,7 +4,7 @@ require_once('../../../private/initialize.php');
 
 $id = $_GET['id'] ?? '1'; // PHP > 7.0
 
-$subject = find_subject_by_id($id);
+$subject = findSubjectById($id);
 
 ?>
 
@@ -36,9 +36,6 @@ $subject = find_subject_by_id($id);
     
   </div>
 
-  <br/><br/>
-
-  
 </div>
 
 <?php include(SHARED_PATH . '/admin_footer.php'); ?>

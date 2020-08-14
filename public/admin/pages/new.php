@@ -2,18 +2,9 @@
 
 require_once('../../../private/initialize.php');
 
-$test = $_GET['test'] ?? '';
+$subjects = find_all_subjects();
 
-if ($test == '404') {
-    error404();
-} elseif ($test == '500') {
-    error500();
-} elseif ($test == 'redirect') {
-    redirectTo('/admin/pages/index.php');
-} else {
-    echo 'No Error';
-}
-
+/* $subject_count = mysqli_num_rows($subjects); */
 
 ?>
 
@@ -31,14 +22,32 @@ if ($test == '404') {
     
     <form action="/admin/pages/create.php" method="post">
       <dl>
-        <dt>Menu Name</dt>
-        <dd><input name="menu_name" type="text" value=""/></dd>
+        <dt>Subject</dt>
+        <dd>
+          <select name="subject_name">
+            <?php
+
+            while ($subject = mysqli_fetch_assoc($subjects)) {
+                echo "<option value=\"" . $subject['menu_name'] . "\"";
+                echo ">" . $subject['menu_name'] . "</option>";
+            }
+
+            ?>
+          </select>
+        </dd>
       </dl>
       <dl>
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1">1</option>
+            <?php
+
+            for ($i=1; $i <= 10; $i++) {
+                echo "<option value=\"{$i}\"";
+                echo ">{$i}</option>";
+            }
+
+            ?>
           </select>
         </dd>
       </dl>
@@ -49,7 +58,19 @@ if ($test == '404') {
           <input name="visible" type="checkbox" value="1" />
         </dd>
       </dl>
-      <div id="operations">
+      <dl>
+        <dl>
+          <dt>Name</dt>
+          <dd><input name="name" type="text" value=""/></dd>
+        </dl>
+        <dl>
+          <dl>
+            <dt>Content</dt>
+            <dd>
+              <textarea cols="30" name="content" rows="10"></textarea>
+            </dd>
+          </dl>
+          <div id="operations">
         <input type="submit" value="Create Page"/>
       </div>
     </form>

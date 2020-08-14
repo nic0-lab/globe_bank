@@ -1,21 +1,4 @@
-<?php
-
-require_once('../../../private/initialize.php');
-
-$test = $_GET['test'] ?? '';
-
-if ($test == '404') {
-    error404();
-} elseif ($test == '500') {
-    error500();
-} elseif ($test == 'redirect') {
-    redirectTo('/admin/subjects/index.php');
-} else {
-    echo 'No Error';
-}
-
-
-?>
+<?php require_once('../../../private/initialize.php'); ?>
 
 <?php $page_title = 'Create Subject'; ?>
 <?php include(SHARED_PATH . '/admin_header.php'); ?>
@@ -38,7 +21,14 @@ if ($test == '404') {
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1">1</option>
+            <?php
+
+            for ($i=1; $i <= 10; $i++) {
+                echo "<option value=\"{$i}\"";
+                echo ">{$i}</option>";
+            }
+
+            ?>
           </select>
         </dd>
       </dl>

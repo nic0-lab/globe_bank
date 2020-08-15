@@ -8,31 +8,40 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
+// For populating the select with the subject name
+$subjects = find_all_subjects();
+
+$subject = [];
+$page = [];
+
 // check if this is a POST request
 // if not, redirect to the form (new.php)
 if (is_post_request()) {
-    
-    // Handle form values sent by new.php
-    $subject = [];
-    $subject = findSubjectByName($_POST['subject_name']);
-    $page = [];
+
     $page['id'] = $id;
-    $page['subject_id'] = $subject['id'];
     $page['menu_name'] = $_POST['menu_name'] ?? '';
     $page['position'] = $_POST['position'] ?? '';
     $page['visible'] = $_POST['visible'] ?? '';
     $page['content'] = $_POST['content'] ?? '';
 
-    $result = updatePage($page);
-    redirectTo('/admin/pages/show.php?id=' . $page['id']);
+    var_dump($_POST);
+    
+    // Handle form values sent by new.php
+    $subject = findSubjectByName($_POST['subject_name']);
+    $page['subject_id'] = $subject['id'];
+
+    $errors = validate_page($page);
+    if (empty($errors)) {
+        $result = updatePage($page);
+        redirectTo('/admin/pages/show.php?id=' . $page['id']);
+    }
+    
     
 } else {
 
     $page = findPageById($id);
     $subject = findSubjectById($page['subject_id']);
 
-    // For populating the select with the subject name
-    $subjects = find_all_subjects();
 }
 
 ?>
@@ -48,7 +57,9 @@ if (is_post_request()) {
   <div class="page edit">
     
     <h1>Edit Page</h1>
-    
+
+    <?= display_errors($errors) ?>
+
     <form action="/admin/pages/edit.php?id=<?= h(u($id)) ?>" method="post">
       <dl>
         <dt>Subject</dt>

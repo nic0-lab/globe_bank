@@ -19,8 +19,16 @@ if (is_post_request()) {
     $subject['position'] = $_POST['position'] ?? '';
     $subject['visible'] = $_POST['visible'] ?? '';
 
-    $result = updateSubject($subject);
-    redirectTo('/admin/subjects/show.php?id=' . $subject['id']);
+    // Validation for data form
+    $errors = validate_subject($subject);
+    if (!empty($errors)) {
+        /* var_dump($errors);         */
+    } else {
+        $result = updateSubject($subject);        
+        redirectTo('/admin/subjects/show.php?id=' . $subject['id']);
+    }
+
+    
     
 } else {
     
@@ -45,6 +53,8 @@ if (is_post_request()) {
   <div class="subject edit">
     
     <h1>Edit Subject</h1>
+
+    <?= display_errors($errors) ?>
     
     <form action="/admin/subjects/edit.php?id=<?= h(u($subject['id'])) ?>" method="post">
       <dl>

@@ -1,5 +1,33 @@
 <?php require_once('../../../private/initialize.php'); ?>
 
+<?php
+
+$subject = [];
+$subject['menu_name'] = $_POST['menu_name'] ?? '';
+$subject['position'] = $_POST['position'] ?? '';
+$subject['visible'] = $_POST['visible'] ?? '';
+
+if (is_post_request()) {
+
+    // Validate form values sent by new.php
+    $errors = validate_subject($subject);
+    if (!empty($errors)) {
+
+    } else {
+        $result = insertSubject($subject);
+        $new_id = mysqli_insert_id($db);
+        redirectTo('/admin/subjects/show.php?id=' . $new_id);
+    }
+
+
+
+} else {
+    /* redirectTo('/admin/subjects/new.php'); */
+}
+
+?>
+
+
 <?php $page_title = 'Create Subject'; ?>
 <?php include(SHARED_PATH . '/admin_header.php'); ?>
 
@@ -11,11 +39,13 @@
   <div class="subject new">
     
     <h1>Create Subject</h1>
-    
-    <form action="/admin/subjects/create.php" method="post">
+
+    <?= display_errors($errors) ?>
+
+    <form action="/admin/subjects/new.php" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input name="menu_name" type="text" value=""/></dd>
+        <dd><input name="menu_name" type="text" value="<?= $subject['menu_name'] ?? '' ?>"/></dd>
       </dl>
       <dl>
         <dt>Position</dt>
@@ -25,6 +55,9 @@
 
             for ($i=1; $i <= 10; $i++) {
                 echo "<option value=\"{$i}\"";
+                if ($subject['position'] == $i) {
+                    echo "selected";
+                }
                 echo ">{$i}</option>";
             }
 
@@ -36,7 +69,13 @@
         <dt>Visible</dt>
         <dd>
           <input name="visible" type="hidden" value="0" />
-          <input name="visible" type="checkbox" value="1" />
+          <input name="visible" type="checkbox" value="1"
+                 <?php
+                 if ($subject['visible'] == 1 ) {
+                   echo "checked";  
+                 }
+                 ?>
+          />
         </dd>
       </dl>
       <div id="operations">

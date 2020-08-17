@@ -31,7 +31,7 @@ function findSubjectById($id)
     global $db;
     
     $sql = "SELECT * FROM subjects ";
-    $sql .= "WHERE id='" . $id . "'";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $id) . "'";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
 
@@ -75,9 +75,9 @@ function insertSubject($subject)
     $sql = "INSERT INTO subjects ";
     $sql .= "(menu_name, position, visible) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $subject['menu_name'] . "',";
-    $sql .= "'" . $subject['position'] . "',";
-    $sql .= "'" . $subject['visible'] . "'";
+    $sql .= "'" . mysqli_escape_string($db, $subject['menu_name']) . "',";
+    $sql .= "'" . mysqli_escape_string($db, $subject['position']) . "',";
+    $sql .= "'" . mysqli_escape_string($db, $subject['visible']) . "'";
     $sql .= ")";
     $result = mysqli_query($db, $sql);
 
@@ -104,10 +104,10 @@ function updateSubject($subject)
     global $db;
 
     $sql = "UPDATE subjects SET ";
-    $sql .= "menu_name='" . $subject['menu_name'] . "', ";
-    $sql .= "position='" . $subject['position'] . "', ";
-    $sql .= "visible='" . $subject['visible'] . "' ";
-    $sql .= "WHERE id='" . $subject['id'] . "' ";
+    $sql .= "menu_name='" . mysqli_escape_string($db, $subject['menu_name']) . "', ";
+    $sql .= "position='" . mysqli_escape_string($db, $subject['position']) . "', ";
+    $sql .= "visible='" . mysqli_escape_string($db, $subject['visible']) . "' ";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $subject['id']) . "' ";
     $sql .= "LIMIT 1";
 
     echo $sql;
@@ -136,7 +136,7 @@ function deleteSubject($id)
     global $db;
 
     $sql = "DELETE FROM subjects ";
-    $sql .= "WHERE id='" . $id . "' ";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $id) . "' ";
     $sql .= "LIMIT 1";
 
     $result = mysqli_query($db, $sql);
@@ -221,7 +221,7 @@ function findPageById($id)
     global $db;
     
     $sql = "SELECT * FROM pages ";
-    $sql .= "WHERE id='" . $id . "'";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $id) . "'";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
 
@@ -244,11 +244,11 @@ function insertPage($page)
     $sql = "INSERT INTO pages ";
     $sql .= "(subject_id, menu_name, position, visible, content) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $page['subject_id'] . "',";
-    $sql .= "'" . $page['menu_name'] . "',";
-    $sql .= "'" . $page['position'] . "',";
-    $sql .= "'" . $page['visible'] . "',";
-    $sql .= "'" . $page['content'] . "'";
+    $sql .= "'" . mysqli_escape_string($db, $page['subject_id']) . "',";
+    $sql .= "'" . mysqli_escape_string($db, $page['menu_name']) . "',";
+    $sql .= "'" . mysqli_escape_string($db, $page['position']) . "',";
+    $sql .= "'" . mysqli_escape_string($db, $page['visible']) . "',";
+    $sql .= "'" . mysqli_escape_string($db, $page['content']) . "'";
     $sql .= ")";
     $result = mysqli_query($db, $sql);
 
@@ -275,12 +275,12 @@ function updatePage($page)
     global $db;
 
     $sql = "UPDATE pages SET ";
-    $sql .= "subject_id='" . $page['subject_id'] . "', ";
-    $sql .= "menu_name='" . $page['menu_name'] . "', ";
-    $sql .= "position='" . $page['position'] . "', ";
-    $sql .= "visible='" . $page['visible'] . "', ";
-    $sql .= "content='" . $page['content'] . "' ";
-    $sql .= "WHERE id='" . $page['id'] . "' ";
+    $sql .= "subject_id='" . mysqli_escape_string($db, $page['subject_id']) . "', ";
+    $sql .= "menu_name='" . mysqli_escape_string($db, $page['menu_name']) . "', ";
+    $sql .= "position='" . mysqli_escape_string($db, $page['position']) . "', ";
+    $sql .= "visible='" . mysqli_escape_string($db, $page['visible']) . "', ";
+    $sql .= "content='" . mysqli_escape_string($db, $page['content']) . "' ";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $page['id']) . "' ";
     $sql .= "LIMIT 1";
 
     echo $sql;
@@ -309,7 +309,7 @@ function deletePage($id)
     global $db;
 
     $sql = "DELETE FROM pages ";
-    $sql .= "WHERE id='" . $id . "' ";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $id) . "' ";
     $sql .= "LIMIT 1";
 
     $result = mysqli_query($db, $sql);

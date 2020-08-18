@@ -20,8 +20,11 @@ if (isset($_GET['subject_id'])) {
     
     // query the first page for the subject
     $pages = findPagesBySubjectId($subject_id);
-    /* var_dump($pages); */
+    var_dump($pages);
     $page = mysqli_fetch_assoc($pages);
+    if ($pages->num_rows == 0) {
+        redirectTo('/index.php');
+    }
     /* var_dump($page); */
 
     if (isset($_GET['page_id'])) {

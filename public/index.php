@@ -19,8 +19,8 @@ if (isset($_GET['subject_id'])) {
     $page_id = $_GET['page_id'] ?? '';
     
     // query the first page for the subject
-    $pages = findPagesBySubjectId($subject_id);
-    var_dump($pages);
+    $pages = findPagesBySubjectId($subject_id, ['visible' => true]);
+    /* var_dump($pages); */
     $page = mysqli_fetch_assoc($pages);
     if ($pages->num_rows == 0) {
         redirectTo('/index.php');
@@ -29,7 +29,7 @@ if (isset($_GET['subject_id'])) {
 
     if (isset($_GET['page_id'])) {
         $page_id = $_GET['page_id'];
-        $page = findPageById($page_id);
+        $page = findPageById($page_id, ['visible' => true]);
     }
 
 }

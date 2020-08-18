@@ -3,13 +3,32 @@
 <?php
 
 $page_id = '';
+$subject_id = '';
 
-if (isset($_GET['id'])) {
-    $page_id = $_GET['id'];
-    $page = findPageById($page_id);
-    if (!$page) {
-        redirectTo('/index.php');
+/* if (isset($_GET['page_id'])) {
+ *     $page_id = $_GET['page_id'];
+ *     $page = findPageById($page_id);
+ *     if (!$page) {
+ *         redirectTo('/index.php');
+ *     }
+ *     $subject_id = $page['subject_id'];
+ * }
+ *  */
+if (isset($_GET['subject_id'])) {
+    $subject_id = $_GET['subject_id'];
+    $page_id = $_GET['page_id'] ?? '';
+    
+    // query the first page for the subject
+    $pages = findPagesBySubjectId($subject_id);
+    /* var_dump($pages); */
+    $page = mysqli_fetch_assoc($pages);
+    /* var_dump($page); */
+
+    if (isset($_GET['page_id'])) {
+        $page_id = $_GET['page_id'];
+        $page = findPageById($page_id);
     }
+
 }
 
 ?>

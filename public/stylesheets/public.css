@@ -71,9 +71,9 @@ navigation a {
     text-decoration: none;
 }
 
-navigation ul li ul li a {
-    color: pink;
-}
+/* navigation ul li ul li a { */
+/*     color: pink; */
+/* } */
 
 
 navigation a:hover {

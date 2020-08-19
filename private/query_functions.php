@@ -1,6 +1,8 @@
 <?php
 
-// subjects
+/******************************************************************************/
+/*                                      Subjects                              */
+/******************************************************************************/
 
 /**
  * Find all subjects
@@ -200,7 +202,10 @@ function validate_subject($subject) {
 
 }
 
-// pages
+/******************************************************************************/
+/*                                      Pages                                 */
+/******************************************************************************/
+
 
 /**
  * Find all pages
@@ -412,5 +417,26 @@ function findPagesBySubjectId($subject_id, $options=[])
     return $result;
 }
 
+/******************************************************************************/
+/*                                      Admins                                */
+/******************************************************************************/
+
+/**
+ * Find all admins
+ *
+ * Return an associative array
+ */
+function findAllAdmins()
+{
+
+    global $db;
+    
+    $sql = 'SELECT * FROM admins ';
+    $sql .= 'ORDER BY id ASC';
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+
+}
 
 ?>

@@ -33,6 +33,7 @@ if (is_post_request()) {
     $errors = validate_page($page);
     if (empty($errors)) {
         $result = updatePage($page);
+        $_SESSION['status_message'] = 'The page was updated successfully.';
         redirectTo('/admin/pages/show.php?id=' . $page['id']);
     }
     

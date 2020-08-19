@@ -14,7 +14,7 @@ $page = findPageById($id);
 if (is_post_request()) {
 
     $result = deletePage($page['id']);
-
+    $_SESSION['status_message'] = 'The page was deleted successfully.';
     redirectTo('/admin/pages/index.php');        
 
 }

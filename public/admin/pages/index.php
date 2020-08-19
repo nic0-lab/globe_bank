@@ -12,6 +12,15 @@ include(SHARED_PATH . '/admin_header.php');
 <div id="content">
 
   <div class="pages listing">
+
+    <!-- Display status message for delete operations -->
+    <?php if (isset($_SESSION['status_message'])) {
+        echo '<div class="status">' . $_SESSION['status_message'] . '</div>';
+        echo '<br>';
+        unset($_SESSION['status_message']);
+    }
+    ?>
+
     <h1>Pages</h1>
 
     <div class="actions">

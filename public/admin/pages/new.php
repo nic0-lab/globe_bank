@@ -26,6 +26,7 @@ if (is_post_request()) {
     if (empty($errors)) {
         $result = insertPage($page);
         $new_id = mysqli_insert_id($db);
+        $_SESSION['status_message'] = 'The page was created successfully.';
         redirectTo('/admin/pages/show.php?id=' . $new_id);        
     }
 

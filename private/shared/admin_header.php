@@ -25,3 +25,11 @@ if (!isset($page_title)) { $page_title = 'Admin Area'; }
         <li><a href="<?= WWW_ROOT . 'admin/logout.php' ?>">Logout</a></li>
       </ul>
     </navigation>
+
+    <!-- Display status message for CRUD operations -->
+    <?php if (isset($_SESSION['status_message'])) {
+        echo '<div class="status">' . $_SESSION['status_message'] . '</div>';
+        echo '<br>';
+        unset($_SESSION['status_message']);
+    }
+    ?>

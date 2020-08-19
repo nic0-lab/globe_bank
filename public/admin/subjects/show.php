@@ -12,14 +12,6 @@ $subject = findSubjectById($id);
 <?php include(SHARED_PATH . '/admin_header.php'); ?>
 
 <div id="content">
-
-  <!-- Display status message for new/edit operations -->
-  <?php if (isset($_SESSION['status_message'])) {
-      echo '<div class="status">' . $_SESSION['status_message'] . '</div>';
-      echo '<br>';
-      unset($_SESSION['status_message']);
-  }
-  ?>
   
   <a class="back-link" href="<?= '/admin/subjects/index.php' ?>">&laquo; Back to List</a>
 

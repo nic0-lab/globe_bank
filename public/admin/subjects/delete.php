@@ -15,8 +15,11 @@ if (is_post_request()) {
 
     $result = deleteSubject($subject['id']);
 
-    $_SESSION['status_message'] = 'The subject was deleted successfully.';
-    redirectTo('/admin/subjects/index.php');        
+    if ($result === true) {        
+        $_SESSION['status_message'] = 'The subject was deleted successfully.';
+        redirectTo('/admin/subjects/index.php');        
+    }
+
 
 }
 

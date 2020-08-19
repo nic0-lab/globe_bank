@@ -15,9 +15,10 @@ if (is_post_request()) {
 
         $result = insertSubject($subject);
         $new_id = mysqli_insert_id($db);
-
-        $_SESSION['status_message'] = 'The subject was created successfully.';
-        redirectTo('/admin/subjects/show.php?id=' . $new_id);
+        if ($result === true) {            
+            $_SESSION['status_message'] = 'The subject was created successfully.';
+            redirectTo('/admin/subjects/show.php?id=' . $new_id);
+        }
 
     }
 
@@ -72,7 +73,7 @@ if (is_post_request()) {
           <input name="visible" type="checkbox" value="1"
                  <?php
                  if ($subject['visible'] == 1 ) {
-                   echo "checked";  
+                     echo "checked";  
                  }
                  ?>
           />

@@ -33,8 +33,10 @@ if (is_post_request()) {
     $errors = validate_page($page);
     if (empty($errors)) {
         $result = updatePage($page);
-        $_SESSION['status_message'] = 'The page was updated successfully.';
-        redirectTo('/admin/pages/show.php?id=' . $page['id']);
+        if ($result === true) {
+            $_SESSION['status_message'] = 'The page was updated successfully.';
+            redirectTo('/admin/pages/show.php?id=' . $page['id']);            
+        }
     }
     
     
@@ -118,14 +120,14 @@ if (is_post_request()) {
         </dd>
       </dl>
       <dl>
-          <dl>
-            <dt>Content</dt>
-            <dd>
-              <textarea cols="30" name="content" rows="10"><?= $page['content'] ?></textarea>
-            </dd>
-          </dl><div id="operations">
-        <input type="submit" value="Submit Page"/>
-      </div>
+        <dl>
+          <dt>Content</dt>
+          <dd>
+            <textarea cols="30" name="content" rows="10"><?= $page['content'] ?></textarea>
+          </dd>
+        </dl><div id="operations">
+          <input type="submit" value="Submit Page"/>
+        </div>
     </form>
   </div>
   

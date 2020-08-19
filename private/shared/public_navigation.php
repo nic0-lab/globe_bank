@@ -1,3 +1,10 @@
+<?php
+// Default values to prevent errors
+$page_id = $page_id ?? '';
+$subject_id = $subject_id ?? '';
+$visible = $visible ?? true;
+?>
+
 <navigation>
   <?php $nav_subjects = find_all_subjects(['visible' => $visible]); ?>
   <ul class="subjects">

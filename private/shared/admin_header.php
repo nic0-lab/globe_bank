@@ -20,6 +20,8 @@ if (!isset($page_title)) { $page_title = 'Admin Area'; }
 
     <navigation>
       <ul>
+        <li>User: <?= $_SESSION['username'] ?? '' ?></li>
         <li><a href="<?= WWW_ROOT . 'admin/index.php' ?>">Menu</a></li>
+        <li><a href="<?= WWW_ROOT . 'admin/logout.php' ?>">Logout</a></li>
       </ul>
     </navigation>

@@ -8,13 +8,14 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-$subject = find_subject_by_id($id);
+$subject = findSubjectById($id);
 
 // check if this is a POST request
 if (is_post_request()) {
 
     $result = deleteSubject($subject['id']);
 
+    $_SESSION['status_message'] = 'The subject was deleted successfully.';
     redirectTo('/admin/subjects/index.php');        
 
 }

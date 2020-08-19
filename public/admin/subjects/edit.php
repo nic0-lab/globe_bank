@@ -22,13 +22,10 @@ if (is_post_request()) {
     // Validation for data form
     $errors = validate_subject($subject);
     if (!empty($errors)) {
-        /* var_dump($errors);         */
-    } else {
-        $result = updateSubject($subject);        
+        $result = updateSubject($subject);
+        $_SESSION['status_message'] = 'The subject was updated successfully.';
         redirectTo('/admin/subjects/show.php?id=' . $subject['id']);
     }
-
-    
     
 } else {
     

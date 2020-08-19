@@ -4,6 +4,7 @@
 
 $page_id = '';
 $subject_id = '';
+/* $visible = true; */
 
 $preview = false;
 if (isset($_GET['preview'])) {
@@ -13,7 +14,6 @@ if (isset($_GET['preview'])) {
 // the preview is for all pages, visible and non visible
 // so $visible must be false for the SQL query
 $visible = !$preview;
-
 
 if (isset($_GET['subject_id'])) {
     $subject_id = $_GET['subject_id'];

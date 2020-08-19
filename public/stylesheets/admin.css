@@ -128,3 +128,11 @@ dd {
   margin-bottom: 0;
   padding-left: 1em;
 }
+
+.status {
+  display: inline-block;
+  border: 2px solid green;
+  color: green;
+  padding: 1em;
+  margin-bottom: 1em;
+}

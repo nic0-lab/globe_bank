@@ -11,15 +11,15 @@ if (is_post_request()) {
 
     // Validate form values sent by new.php
     $errors = validate_subject($subject);
-    if (!empty($errors)) {
+    if (empty($errors)) {
 
-    } else {
         $result = insertSubject($subject);
         $new_id = mysqli_insert_id($db);
+
+        $_SESSION['status_message'] = 'The subject was created successfully.';
         redirectTo('/admin/subjects/show.php?id=' . $new_id);
+
     }
-
-
 
 } else {
     /* redirectTo('/admin/subjects/new.php'); */

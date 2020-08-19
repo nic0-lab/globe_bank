@@ -39,7 +39,7 @@ include(SHARED_PATH . '/admin_header.php');
           <td><?php echo h($page['position']); ?></td>
           <td><?php echo $page['visible'] == 1 ? 'true' : 'false'; ?></td>
     	    <td><?php echo h($page['menu_name']); ?></td>
-          <td><?php echo h($page['content']); ?></td>
+          <td><?= substr(h($page['content']), 0, 30) . '...' ?></td>
           <td><a class="action" href="/admin/pages/show.php?id=<?= h(u($page['id'])); ?>">View</a></td>
           <td><a class="action" href="/admin/pages/edit.php?id=<?= h(u($page['id'])); ?>">Edit</a></td>
           <td><a class="action" href="/admin/pages/delete.php?id=<?= h(u($page['id'])); ?>">Delete</a></td>

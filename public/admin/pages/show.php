@@ -19,26 +19,39 @@ $page_title = 'Show Page';
   <br/><br/>
   <div class="page show">
 
+    <h1>Page: <?= h($page['menu_name']) ?></h1>
+
+    <div class="actions">
+      <a class="action"
+         href="<?= '/index.php?subject_id=' . h(u($subject['id'])) 
+                 . '&page_id=' . h(u($page['id'])) 
+                 . '&preview=true' 
+               ?>"
+         target="_blank">
+        Preview
+      </a>
+    </div>
+
     <div class="attributes">
       <dl>
         <dt>Subject</dt>
-        <dd><?= h($subject['menu_name']); ?></dd>
+        <dd><?= h($subject['menu_name']) ?></dd>b
       </dl>
       <dl>
         <dt>Name</dt>
-        <dd><?= h($page['menu_name']); ?></dd>
+        <dd><?= h($page['menu_name']) ?></dd>
       </dl>
       <dl>
         <dt>Position</dt>
-        <dd><?= h($page['position']); ?></dd>
+        <dd><?= h($page['position']) ?></dd>
       </dl>
       <dl>
         <dt>Visible</dt>
-        <dd><?= h($page['visible']) == '1' ? 'true' : 'false'; ?></dd>
+        <dd><?= h($page['visible']) == '1' ? 'true' : 'false' ?></dd>
       </dl>
       <dl>
         <dt>Content</dt>
-        <dd><?= h($page['content']); ?></dd>
+        <dd><?= h($page['content']) ?></dd>
       </dl>
     </div>
 

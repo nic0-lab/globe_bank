@@ -24,7 +24,7 @@ if (is_post_request()) {
     $page['visible'] = $_POST['visible'] ?? '';
     $page['content'] = $_POST['content'] ?? '';
 
-    var_dump($_POST);
+    /* var_dump($_POST); */
     
     // Handle form values sent by new.php
     $subject = findSubjectByName($_POST['subject_name']);

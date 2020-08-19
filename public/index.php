@@ -5,21 +5,22 @@
 $page_id = '';
 $subject_id = '';
 
-/* if (isset($_GET['page_id'])) {
- *     $page_id = $_GET['page_id'];
- *     $page = findPageById($page_id);
- *     if (!$page) {
- *         redirectTo('/index.php');
- *     }
- *     $subject_id = $page['subject_id'];
- * }
- *  */
+$preview = false;
+if (isset($_GET['preview'])) {
+    //previewing should require admin to be logged in
+    $preview = $_GET['preview'] == 'true' ? true : false;
+}
+// the preview is for all pages, visible and non visible
+// so $visible must be false for the SQL query
+$visible = !$preview;
+
+
 if (isset($_GET['subject_id'])) {
     $subject_id = $_GET['subject_id'];
     $page_id = $_GET['page_id'] ?? '';
     
     // query the first page for the subject
-    $pages = findPagesBySubjectId($subject_id, ['visible' => true]);
+    $pages = findPagesBySubjectId($subject_id, ['visible' => $visible]);
     /* var_dump($pages); */
     $page = mysqli_fetch_assoc($pages);
     if ($pages->num_rows == 0) {
@@ -29,7 +30,7 @@ if (isset($_GET['subject_id'])) {
 
     if (isset($_GET['page_id'])) {
         $page_id = $_GET['page_id'];
-        $page = findPageById($page_id, ['visible' => true]);
+        $page = findPageById($page_id, ['visible' => $visible]);
     }
 
 }
@@ -48,8 +49,8 @@ if (isset($_GET['subject_id'])) {
 
     if (isset($page)) {
         // show the page from the database
-        // TODO add html escaping back in
-        echo $page['content'];
+        $allowed_tags = '<div><img><h1><h2><p><br><strong><em><ul><li>';
+        echo strip_tags($page['content'], $allowed_tags);
     } else {
         include(SHARED_PATH . '/static_homepage.php');    
     }

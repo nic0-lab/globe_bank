@@ -1,0 +1,26 @@
+create an admins directory
+pages to create:
+- index.php
+- show.php
+- new.php
+- edit.php
+- delete.php
+
+put a link on the main admin index to admins section
+
+admin queries
+- findAllAdmins()
+- findAdminById($id)
+- insertAdmin($admin)
+- updateAdmin($admin)
+- deleteAdmin($admin)
+
+Validations
+- first name: 2-255 characters
+- last name: 2-255 characters
+- email: not blank, max. 2-255 characters, valid format
+- username:  8-255 characters, unique
+- password: 12+ characters
+- password: 1 uppercase, 1 lowercase, 1 number, 1 symbol
+- confirm password: not blank, matche password
+

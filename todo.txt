@@ -18,9 +18,9 @@ admin queries
 Validations
 - first name: 2-255 characters
 - last name: 2-255 characters
-- email: not blank, max. 2-255 characters, valid format
-- username:  8-255 characters, unique
-- password: 12+ characters
+- email: not blank, max. 2-255 characters, valid format unique, not blank
+- username:  8-255 characters, unique, not blank
+- password: 12+ characters, not blank
 - password: 1 uppercase, 1 lowercase, 1 number, 1 symbol
-- confirm password: not blank, matche password
+- confirm password: not blank, match password
 

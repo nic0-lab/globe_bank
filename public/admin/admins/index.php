@@ -21,9 +21,10 @@ $admins = findAllAdmins();
   	<table class="list">
   	  <tr>
         <th>ID</th>
-        <th>Position</th>
-        <th>Visible</th>
-  	    <th>Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+  	    <th>Email</th>
+  	    <th>User Name</th>
   	    <th>&nbsp;</th>
   	    <th>&nbsp;</th>
         <th>&nbsp;</th>
@@ -32,9 +33,10 @@ $admins = findAllAdmins();
       <?php while ($admin = mysqli_fetch_assoc($admins)) { ?>
         <tr>
           <td><?= h($admin['id']) ?></td>
-          <td><?= h($admin['position']) ?></td>
-          <td><?= $admin['visible'] == 1 ? 'true' : 'false' ?></td>
-    	    <td><?= h($admin['menu_name']) ?></td>
+          <td><?= h($admin['first_name']) ?></td>
+          <td><?= h($admin['last_name']) ?></td>
+          <td><?= h($admin['email']) ?></td>
+    	    <td><?= h($admin['user_name']) ?></td>
           <td><a class="action" href="/admin/admins/show.php?id=<?= h(u($admin['id'])) ?>">View</a></td>
           <td><a class="action" href="/admin/admins/edit.php?id=<?= h(u($admin['id'])) ?>">Edit</a></td>
           <td><a class="action" href="/admin/admins/delete.php?id=<?= h(u($admin['id'])) ?>">Delete</a></td>

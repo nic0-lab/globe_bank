@@ -104,15 +104,34 @@ function has_unique_page_menu_name($menu_name, $current_id="0")
     global $db;
 
     $sql = "SELECT * FROM pages ";
-    $sql .= "where menu_name='" . mysqli_escape_string($db, $menu_name) . "'";
+    $sql .= "WHERE menu_name='" . mysqli_escape_string($db, $menu_name) . "' ";
     $sql .= "AND id != '" . mysqli_escape_string($db, $current_id) . "'";
 
-        $page_set = mysqli_query($db, $sql);
-        $page_count = mysqli_num_rows($page_set);
-        mysqli_free_result($page_set);
+    $page_set = mysqli_query($db, $sql);
+    $page_count = mysqli_num_rows($page_set);
+    mysqli_free_result($page_set);
 
-        return $page_count === 0;
-        
-    }
+    return $page_count === 0;
+    
+}
+
+// has_unique_admin_email
+function has_unique_admin_email($email, $current_id="0")
+{
+
+    global $db;
+
+    $sql = "SELECT * FROM admins ";
+    $sql .= "where email='" . mysqli_escape_string($db, $email) . "' ";
+    $sql .= "AND id != '" . mysqli_escape_string($db, $current_id) . "'";
+
+    $admins = mysqli_query($db, $sql);
+    $admins_count = mysqli_num_rows($admins);
+    mysqli_free_result($admins);
+
+    return $admins_count === 0;
+    
+}
+
 
 ?>

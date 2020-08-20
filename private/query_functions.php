@@ -566,4 +566,66 @@ function findAdminById($id)
     return $admin;
 }
 
+/**
+ * Update a admin
+ *
+ *
+ */
+function updateAdmin($admin)
+{
+
+    global $db;
+
+    $sql = "UPDATE admins SET ";
+    $sql .= "last_name='" . mysqli_escape_string($db, $admin['last_name']) . "', ";
+    $sql .= "first_name='" . mysqli_escape_string($db, $admin['first_name']) . "', ";
+    $sql .= "email='" . mysqli_escape_string($db, $admin['email']) . "', ";
+    $sql .= "user_name='" . mysqli_escape_string($db, $admin['user_name']) . "', ";
+    $sql .= "hashed_password='" . mysqli_escape_string($db, $admin['password']) . "' ";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $admin['id']) . "' ";
+    $sql .= "LIMIT 1";
+
+    echo $sql;
+
+    $result = mysqli_query($db, $sql);
+    // For UPDATE statements, $result is true/false
+    if ($result) {
+        return true;
+    } else {
+        // UPDATE failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+
+}
+
+/**
+ * Delete a admin
+ *
+ *
+ */
+function deleteAdmin($id)
+{
+
+    global $db;
+
+    $sql = "DELETE FROM admins ";
+    $sql .= "WHERE id='" . mysqli_escape_string($db, $id) . "' ";
+    $sql .= "LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+
+    // For DELETE statements, $result is true/false
+    if ($result) {
+        return true; 
+    } else {
+        // DELETE failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+    
+}
+
 ?>

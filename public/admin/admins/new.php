@@ -8,16 +8,16 @@ $admin = [];
 // if not, redirect to the form (new.php)
 if (is_post_request()) {
 
-    $admin['menu_name'] = $_POST['name'] ?? '';
-    $admin['position'] = $_POST['position'] ?? '';
-    $admin['visible'] = $_POST['visible'] ?? '';
-    $admin['content'] = $_POST['content'] ?? '';
+    $admin['first_name'] = $_POST['first_name'] ?? '';
+    $admin['last_name'] = $_POST['last_name'] ?? '';
+    $admin['email'] = $_POST['email'] ?? '';
+    $admin['user_name'] = $_POST['user_name'] ?? '';
+    $admin['password'] = $_POST['password'] ?? '';
+    $admin['cpassword'] = $_POST['cpassword'] ?? '';
 
     // Validate form values sent by new.php
-    $subject = findSubjectByName($subject['menu_name']);
-    $admin['subject_id'] =  $subject['id'];
 
-    $errors = validate_admin($admin);
+    $errors = validateAdmin($admin);
     if (empty($errors)) {
         $result = insertAdmin($admin);
         $new_id = mysqli_insert_id($db);

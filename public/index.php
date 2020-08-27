@@ -9,7 +9,7 @@ $subject_id = '';
 $preview = false;
 if (isset($_GET['preview'])) {
     //previewing should require admin to be logged in
-    $preview = $_GET['preview'] == 'true' ? true : false;
+    $preview = $_GET['preview'] == 'true' && isLoggedIn() ? true : false;
 }
 // the preview is for all pages, visible and non visible
 // so $visible must be false for the SQL query

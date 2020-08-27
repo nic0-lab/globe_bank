@@ -2,6 +2,8 @@
 
 require_once('../../../private/initialize.php');
 
+requireLogin();
+
 $id = $_GET['id'] ?? '1'; // PHP > 7.0
 
 $admin = findAdminById($id);
@@ -23,7 +25,7 @@ $page_title = 'Show Admin';
     <div class="attributes">
       <dl>
         <dt>First Name</dt>
-        <dd><?= h($admin['first_name']) ?></dd>b
+        <dd><?= h($admin['first_name']) ?></dd>
       </dl>
       <dl>
         <dt>Last Name</dt>

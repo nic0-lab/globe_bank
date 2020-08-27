@@ -2,6 +2,8 @@
 
 <?php
 
+requireLogin();
+
 $subject = [];
 $subject['menu_name'] = $_POST['subject_name'] ?? '';
 

@@ -2,17 +2,46 @@
 require_once('../../private/initialize.php');
 
 $errors = [];
-$username = '';
+$user_name = '';
 $password = '';
 
 if(is_post_request()) {
 
-  $username = $_POST['username'] ?? '';
-  $password = $_POST['password'] ?? '';
+    $user_name = $_POST['user_name'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-  $_SESSION['username'] = $username;
+    // Validate form
+    if (is_blank($user_name)) {
+        $errors[] = 'User Name cannot be blank.';
+    }
 
-  redirectTo('/admin/index.php');
+    if (is_blank($password)) {
+        $errors[] = 'Password cannot be blank.';
+    }
+
+    // If no errors, try to login
+    if (empty($errors)) {
+
+        $admin = findAdminByUsername($user_name);
+
+        if ($admin) {
+            
+            if (password_verify($password, $admin['hashed_password'])) {
+                // password matches
+                logInAdmin($admin);
+                var_dump($admin);
+                /* exit; */
+                redirectTo('/admin/index.php');
+            } else {
+                // username found, but password does not match
+                $errors[] = 'Log in was unsuccessful.';
+            }
+        } else {
+            // no username found
+            $errors[] = 'Log in was unsuccessful.';
+        }
+    }
+    
 }
 
 ?>
@@ -26,8 +55,8 @@ if(is_post_request()) {
   <?php echo display_errors($errors); ?>
 
   <form action="login.php" method="post">
-    Username:<br />
-    <input type="text" name="username" value="<?php echo h($username); ?>" /><br />
+    User Name:<br />
+    <input type="text" name="user_name" value="<?php echo h($user_name); ?>" /><br />
     Password:<br />
     <input type="password" name="password" value="" /><br />
     <input type="submit" name="submit" value="Submit"  />

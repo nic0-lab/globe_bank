@@ -2,6 +2,8 @@
 
 <?php
 
+requireLogin();
+
 $page_set = find_all_pages();
 
 $page_title = 'Pages';

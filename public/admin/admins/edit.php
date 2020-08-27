@@ -2,6 +2,8 @@
 
 <?php
 
+requireLogin();
+
 if (!isset($_GET['id'])) {
     echo 'test';
     /* redirectTo('/admin/admins/index.php'); */
@@ -14,7 +16,7 @@ $admin = [];
 // check if this is a POST request
 if (is_post_request()) {
 
-    var_dump($_POST);
+    /* var_dump($_POST); */
 
     $admin['id'] = $id;
     $admin['first_name'] = $_POST['first_name'] ?? '';
@@ -25,7 +27,8 @@ if (is_post_request()) {
     $admin['cpassword']  = $_POST['cpassword']  ?? '';
 
     // Validate form values
-    $errors = validateAdmin($admin);
+    $password_sent = !is_blank($admin['password']);
+    $errors = validateAdmin($admin, ['password_required' => $password_sent]);
     if (empty($errors)) {
         $result = updateAdmin($admin);
         if ($result === true) {
@@ -78,11 +81,11 @@ if (is_post_request()) {
       </dl>
       <dl>
         <dt>Password</dt>
-        <dd><input name="password" type="password" value="<?= $admin['hashed_password'] ?? '' ?>"/></dd>
+        <dd><input name="password" type="password"/></dd>
       </dl>
       <dl>
         <dt>Confirm Password</dt>
-        <dd><input name="cpassword" type="password" value="<?= $admin['hashed_password'] ?? '' ?>"/></dd>
+        <dd><input name="cpassword" type="password"/></dd>
       </dl>
       <div id="operations">
         <input type="submit" value="Edit Admin"/>

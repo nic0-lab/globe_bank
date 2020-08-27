@@ -2,6 +2,8 @@
 
 <?php
 
+requireLogin();
+
 if (!isset($_GET['id'])) {
     redirectTo('/admin/pages/index.php');
 }

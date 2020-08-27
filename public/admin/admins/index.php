@@ -2,6 +2,8 @@
 
 <?php
 
+requireLogin();
+
 $admins = findAllAdmins();
 
 ?>

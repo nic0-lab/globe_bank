@@ -2,6 +2,8 @@
 
 <?php
 
+requireLogin();
+
 $subject_set = find_all_subjects();
 
 ?>

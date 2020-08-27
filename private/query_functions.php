@@ -449,6 +449,8 @@ function insertAdmin($admin)
 
     global $db;
 
+    $hashed_password = password_hash($admin['password'], PASSWORD_BCRYPT);
+
     $sql = "INSERT INTO admins ";
     $sql .= "(first_name, last_name, email, user_name, hashed_password) ";
     $sql .= "VALUES (";
@@ -456,7 +458,7 @@ function insertAdmin($admin)
     $sql .= "'" . mysqli_escape_string($db, $admin['last_name']) . "',";
     $sql .= "'" . mysqli_escape_string($db, $admin['email']) . "',";
     $sql .= "'" . mysqli_escape_string($db, $admin['user_name']) . "',";
-    $sql .= "'" . mysqli_escape_string($db, $admin['password']) . "'";
+    $sql .= "'" . mysqli_escape_string($db, $hashed_password) . "'";
     $sql .= ")";
     $result = mysqli_query($db, $sql);
 
@@ -477,9 +479,11 @@ function insertAdmin($admin)
  *
  * Return: array $errors
  */
-function validateAdmin($admin) {
+function validateAdmin($admin, $options=[]) {
 
     $errors = [];
+
+    $password_required = $options['password_required'] ?? true;
 
     // first name
     if(is_blank($admin['first_name'])) {
@@ -516,28 +520,32 @@ function validateAdmin($admin) {
         $errors[] = "User name must be between 8 and 255 characters.";
     }
 
-    // password
-    if (is_blank($admin['password'])) {
-        $errors[] = "Password cannot be blank.";
-    } elseif (!has_length($admin['password'], ['min' => 12, 'max' => 255])) {
-        $errors[] = "Password must be between 12 and 255 characters.";
-    } elseif (!(preg_match('/[[:lower:]]+/', $admin['password']) &&
-              preg_match('/[[:upper:]]+/', $admin['password']) &&
-              preg_match('/[[:digit:]]+/', $admin['password']) &&
-              preg_match('/[[:punct:]]+/', $admin['password']))) {
-        $errors[] = 'Password must contain al least 1 uppercase, 1 lowercase, 1 number, 1 symbol.';
-    }
+    // passwords
+    if ($password_required) {
 
-    // cpassword
-    if (is_blank($admin['cpassword'])) {
-        $errors[] = "Confirm password cannot be blank.";
-    } // elseif (!has_length_greater_than($admin['cpassword'], ['min' => 12, 'max' => 255])) {
-    //     $errors[] = "Confirmation Password must be between 2 and 255 characters.";
-    // }
+        // password
+        if (is_blank($admin['password'])) {
+            $errors[] = "Password cannot be blank.";
+        } elseif (!has_length($admin['password'], ['min' => 12, 'max' => 255])) {
+            $errors[] = "Password must be between 12 and 255 characters.";
+        } elseif (!(preg_match('/[[:lower:]]+/', $admin['password']) &&
+                    preg_match('/[[:upper:]]+/', $admin['password']) &&
+                    preg_match('/[[:digit:]]+/', $admin['password']) &&
+                    preg_match('/[[:punct:]]+/', $admin['password']))) {
+            $errors[] = 'Password must contain al least 1 uppercase, 1 lowercase, 1 number, 1 symbol.';
+        }
 
-    // check passwords matching
-    if ($admin['password'] != $admin['cpassword']) {
-        $errors[] = "The passwords are not matching";
+        // confirmation password
+        if (is_blank($admin['cpassword'])) {
+            $errors[] = "Confirm password cannot be blank.";
+        } // elseif (!has_length_greater_than($admin['cpassword'], ['min' => 12, 'max' => 255])) {
+        //     $errors[] = "Confirmation Password must be between 2 and 255 characters.";
+        // }
+
+        // check passwords matching
+        if ($admin['password'] !== $admin['cpassword']) {
+            $errors[] = "The passwords are not matching";
+        }
     }
 
     return $errors;
@@ -547,7 +555,7 @@ function validateAdmin($admin) {
 /**
  * Find an admin by id
  *
- * Return an array
+ * Return an associative array
  */
 function findAdminById($id)
 {
@@ -567,21 +575,50 @@ function findAdminById($id)
 }
 
 /**
- * Update a admin
+ * Find an admin by username
  *
+ * Return an associative array
+ */
+function findAdminByUsername($username)
+{
+
+    global $db;
+
+    
+    $sql = "SELECT * FROM admins ";
+    $sql .= "WHERE user_name='" . mysqli_escape_string($db, $username) . "'";
+    var_dump($sql);
+    // exit;
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+
+    $admin = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+
+    return $admin;
+}
+
+/**
+ * Update an admin
  *
+ * Return: true or exit
  */
 function updateAdmin($admin)
 {
 
     global $db;
 
+    $password_sent = !is_blank($admin['password']);
+
     $sql = "UPDATE admins SET ";
     $sql .= "last_name='" . mysqli_escape_string($db, $admin['last_name']) . "', ";
     $sql .= "first_name='" . mysqli_escape_string($db, $admin['first_name']) . "', ";
     $sql .= "email='" . mysqli_escape_string($db, $admin['email']) . "', ";
-    $sql .= "user_name='" . mysqli_escape_string($db, $admin['user_name']) . "', ";
-    $sql .= "hashed_password='" . mysqli_escape_string($db, $admin['password']) . "' ";
+    if ($password_sent) {
+        $hashed_password = password_hash($admin['password'], PASSWORD_BCRYPT);
+        $sql .= "hashed_password='" . mysqli_escape_string($db, $hashed_password) . "', ";
+    }
+    $sql .= "user_name='" . mysqli_escape_string($db, $admin['user_name']) . "' ";
     $sql .= "WHERE id='" . mysqli_escape_string($db, $admin['id']) . "' ";
     $sql .= "LIMIT 1";
 

@@ -2,6 +2,8 @@
 
 <?php
 
+requireLogin();
+
 $admin = [];
 
 // check if this is a POST request

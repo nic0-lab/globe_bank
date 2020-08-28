@@ -417,6 +417,32 @@ function findPagesBySubjectId($subject_id, $options=[])
     return $result;
 }
 
+/**
+ * Count all pages for a subject id
+ *
+ * Return: integer
+ */
+function countPagesBySubjectId($subject_id, $options=[])
+{
+
+    global $db;
+
+    $visible = $options['visible'] ?? false;
+    
+    $sql = "SELECT COUNT(*) FROM pages ";
+    $sql .= "WHERE subject_id='" . mysqli_escape_string($db, $subject_id) . "' ";
+    if ($visible) {
+        $sql .= "AND visible = true ";
+    }
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $row = mysqli_fetch_row($result);
+    mysqli_free_result($result);
+    $count = $row[0];
+
+    return $count;
+}
+
 /******************************************************************************/
 /*                                      Admins                                */
 /******************************************************************************/

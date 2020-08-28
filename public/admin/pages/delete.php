@@ -18,7 +18,7 @@ if (is_post_request()) {
     $result = deletePage($page['id']);
     if ($result === true) {        
         $_SESSION['status_message'] = 'The page was deleted successfully.';
-        redirectTo('/admin/pages/index.php');        
+        redirectTo('/admin/subjects/show.php?id=' . h(u($page['subject_id'])));        
     }
 
 }
@@ -30,7 +30,7 @@ if (is_post_request()) {
 
 <div id="content">
   
-  <a class="back-link" href="/admin/pages/index.php">&laquo; Back to List</a>
+  <a class="back-link" href="<?= '/admin/subjects/show.php?id=' . h(u($page['subject_id'])) ?>">&laquo; Back to Subject Page</a>
   <br/><br/>
 
   <div class="page delete">

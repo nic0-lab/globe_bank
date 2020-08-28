@@ -5,24 +5,22 @@
 requireLogin();
 
 $subject = [];
-$subject['menu_name'] = $_POST['subject_name'] ?? '';
-
 $page = [];
-$page['position'] = '';
-$page['visible'] = '';
+$subjects = find_all_subjects();
 
 // check if this is a POST request
 // if not, redirect to the form (new.php)
 if (is_post_request()) {
 
     $page['menu_name'] = $_POST['name'] ?? '';
+    $page['subject_id'] =  $_POST['subject_id'] ?? '';
     $page['position'] = $_POST['position'] ?? '';
     $page['visible'] = $_POST['visible'] ?? '';
     $page['content'] = $_POST['content'] ?? '';
 
     // Validate form values sent by new.php
-    $subject = findSubjectByName($subject['menu_name']);
-    $page['subject_id'] =  $subject['id'];
+    // fetch the full subject for the subject id
+    /* $subject = findSubjectByName($_POST['subject_name']); */
 
     $errors = validate_page($page);
     if (empty($errors)) {
@@ -36,11 +34,16 @@ if (is_post_request()) {
     }
 
 } else {
-    /* redirectTo('/admin/pages/new.php'); */
+    
+    $page['subject_id'] = $_GET['subject_id'] ?? '1';
+    $page['menu_name'] = '';
+    $page['position'] = '';
+    $page['visible'] = '';
+    $page['content'] = '';
+
+    // $subject = findSubjectById($page['subject_id']);
+    
 }
-
-$subjects = find_all_subjects();
-
 
 ?>
 
@@ -49,7 +52,7 @@ $subjects = find_all_subjects();
 
 <div id="content">
   
-  <a class="back-link" href="<?= '/admin/pages/index.php' ?>">&laquo; Back to List</a>
+  <a class="back-link" href="/admin/subjects/show.php?id=<?= $page['subject_id'] ?>">&laquo; Back to Subject View</a>
   <br/><br/>
 
   <div class="page new">
@@ -62,14 +65,14 @@ $subjects = find_all_subjects();
       <dl>
         <dt>Subject</dt>
         <dd>
-          <select name="subject_name">
+          <select name="subject_id">
             <?php
 
-            while ($elt = mysqli_fetch_assoc($subjects)) {
-                echo "<option value=\"" . $elt['menu_name'] . "\"";
-                if ($subject['menu_name'] == $elt['menu_name']) {
+            while ($subject = mysqli_fetch_assoc($subjects)) {
+                echo "<option value=\"" . $subject['id'] . "\"";
+                if ($page['subject_id'] == $subject['id']) {
                     echo "selected";
-                }echo ">" . $elt['menu_name'] . "</option>";
+                }echo ">" . $subject['menu_name'] . "</option>";
             }
 
             ?>
